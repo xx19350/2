@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>西昌四天旅行手册 · 9.30–10.3</title>
+<style>
+  :root{
+    --paper:#fdf6e9;
+    --paper2:#fffaf0;
+    --ink:#2b2620;
+    --ink-soft:#6b6258;
+    --line:#d9cdb8;
+    --accent:#c0532b;
+    --d1:#e07a3f;
+    --d2:#2a9d8f;
+    --d3:#9b5de5;
+    --d4:#e63946;
+    --shadow:rgba(80,60,30,.10);
+    --card-radius:14px 18px 13px 17px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#1b1916;
+      --paper2:#25221d;
+      --ink:#f3ead9;
+      --ink-soft:#b6ab97;
+      --line:#403a31;
+      --accent:#ff8a5c;
+      --d1:#f08a4f;
+      --d2:#3fb8a8;
+      --d3:#b17cf0;
+      --d4:#ff5a66;
+      --shadow:rgba(0,0,0,.45);
+    }
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",ui-rounded,"Segoe UI",system-ui,sans-serif;
+    background:var(--paper);
+    background-image:radial-gradient(var(--line) 0.5px, transparent 0.5px);
+    background-size:22px 22px;
+    color:var(--ink);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:48px;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px;}
+
+  /* 此刻关注 卡片 */
+  .nowcard{
+    position:sticky;top:0;z-index:20;
+    background:var(--paper2);
+    border-bottom:2px dashed var(--line);
+    padding:14px 16px 12px;
+    box-shadow:0 4px 14px var(--shadow);
+  }
+  .nowlabel{font-size:12px;letter-spacing:3px;color:var(--accent);font-weight:700;}
+  .nowevent{font-size:17px;font-weight:700;margin:3px 0 8px;}
+  .countdown{display:flex;gap:10px;}
+  .countdown .seg{
+    background:var(--paper);border:2px solid var(--line);border-radius:10px 13px 11px 14px;
+    padding:6px 10px;text-align:center;min-width:62px;
+  }
+  .countdown .seg b{display:block;font-size:26px;font-variant-numeric:tabular-nums;line-height:1.1;color:var(--accent);}
+  .countdown .seg span{font-size:11px;color:var(--ink-soft);}
+
+  h1{font-size:22px;margin:22px 0 2px;}
+  .sub{color:var(--ink-soft);font-size:13px;margin-bottom:6px;}
+
+  section{margin:26px 0;}
+  .sec-title{font-size:15px;font-weight:800;letter-spacing:1px;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+  .sec-title::before{content:"";width:10px;height:10px;background:var(--accent);border-radius:3px 5px 3px 6px;display:inline-block;transform:rotate(8deg);}
+
+  /* 地图 */
+  .mapbox{background:var(--paper2);border:2px solid var(--line);border-radius:var(--card-radius);padding:10px;box-shadow:0 3px 10px var(--shadow);}
+  .mapbox svg{width:100%;height:auto;display:block;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:10px;font-size:12px;color:var(--ink-soft);}
+  .legend i{display:inline-block;width:14px;height:4px;border-radius:3px;margin-right:5px;vertical-align:middle;}
+  .legend .stay{display:inline-block;width:12px;height:12px;border:2px solid var(--ink-soft);border-radius:50%;margin-right:5px;vertical-align:middle;}
+  .mapscheme{font-size:11px;color:var(--ink-soft);margin-top:6px;}
+
+  /* 订单卡片 */
+  .book{background:var(--paper2);border:2px solid var(--line);border-radius:var(--card-radius);padding:12px 14px;margin-bottom:12px;box-shadow:0 3px 10px var(--shadow);}
+  .book h3{margin:0 0 8px;font-size:15px;}
+  .book .row{display:flex;font-size:13.5px;padding:2px 0;}
+  .book .row .k{width:74px;flex:none;color:var(--ink-soft);}
+  .book .row .v{flex:1;}
+
+  /* 地点链接 */
+  .loc{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);cursor:pointer;}
+  .loc:active{opacity:.6;}
+
+  /* 逐日 */
+  .day{background:var(--paper2);border:2px solid var(--line);border-radius:var(--card-radius);margin-bottom:16px;box-shadow:0 3px 10px var(--shadow);overflow:hidden;}
+  .dayhead{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;cursor:pointer;user-select:none;}
+  .dayhead .dh-l{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;}
+  .daynum{font-weight:800;font-size:15px;}
+  .daydate{font-size:12px;color:var(--ink-soft);}
+  .daytitle{font-size:14px;font-weight:700;}
+  .daytag{font-size:11px;padding:1px 8px;border-radius:8px;color:#fff;font-weight:700;}
+  .toggle{font-size:12px;color:var(--ink-soft);white-space:nowrap;}
+  .daymap{padding:10px 14px 4px;border-top:1px dashed var(--line);}
+  .daymap svg{width:100%;height:auto;display:block;}
+  .navbtn{display:inline-block;margin:8px 0 12px;background:var(--accent);color:#fff;text-decoration:none;font-size:13px;font-weight:700;padding:9px 16px;border-radius:10px 13px 11px 14px;}
+  .navbtn:active{opacity:.7;}
+
+  ol.timeline{list-style:none;margin:6px 0 14px;padding:0 15px 4px;}
+  ol.timeline li{display:flex;gap:12px;padding:9px 0;border-bottom:1px dotted var(--line);}
+  ol.timeline li:last-child{border-bottom:none;}
+  .t{flex:none;width:46px;text-align:right;font-size:13px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;padding-top:1px;}
+  .c{flex:1;font-size:14px;}
+  .c .note{display:block;color:var(--ink-soft);font-size:12.5px;margin-top:2px;}
+  .tag{display:inline-block;font-size:10.5px;padding:0 7px;border-radius:7px;margin-left:6px;vertical-align:middle;font-weight:700;}
+  .tag.free{background:#e8f3ef;color:#1f7a6c;}
+  .tag.book{background:#fdeede;color:#b5651d;}
+  .tag.need{background:#fde2e2;color:#c0392b;}
+  @media (prefers-color-scheme: dark){
+    .tag.free{background:#16302b;color:#7fe0cd;}
+    .tag.book{background:#3a2c18;color:#ffb870;}
+    .tag.need{background:#3a1c1c;color:#ff9a9a;}
+  }
+
+  /* 列表 */
+  .list{background:var(--paper2);border:2px solid var(--line);border-radius:var(--card-radius);padding:8px 16px;box-shadow:0 3px 10px var(--shadow);}
+  .list li{padding:8px 0;border-bottom:1px dotted var(--line);font-size:14px;list-style:none;position:relative;padding-left:20px;}
+  .list li:last-child{border-bottom:none;}
+  .list li::before{content:"·";position:absolute;left:4px;color:var(--accent);font-weight:800;font-size:18px;top:-1px;}
+  ul.list{margin:0;padding-left:0;}
+
+  .tips p{font-size:13.5px;margin:7px 0;padding-left:16px;position:relative;}
+  .tips p::before{content:"▸";position:absolute;left:0;color:var(--accent);}
+  .risk{background:#fdecea;border:2px solid #f3b6ad;border-radius:var(--card-radius);padding:10px 14px;margin-top:10px;}
+  @media (prefers-color-scheme: dark){.risk{background:#331c1c;border-color:#7a3b3b;}}
+  .risk p{font-size:13px;margin:6px 0;padding-left:16px;position:relative;}
+  .risk p::before{content:"!";position:absolute;left:0;color:var(--d4);font-weight:800;}
+
+  footer{text-align:center;color:var(--ink-soft);font-size:11px;margin-top:30px;line-height:1.8;}
+</style>
+</head>
+<body>
+
+<div class="nowcard">
+  <div class="nowlabel">此刻关注</div>
+  <div class="nowevent" id="nowEvent">—</div>
+  <div class="countdown" id="countdown">
+    <div class="seg"><b id="cd-d">0</b><span>天</span></div>
+    <div class="seg"><b id="cd-h">0</b><span>时</span></div>
+    <div class="seg"><b id="cd-m">0</b><span>分</span></div>
+    <div class="seg"><b id="cd-s">0</b><span>秒</span></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h1>西昌四天旅行手册</h1>
+  <div class="sub">9.30 周三 – 10.3 周六 · 两人 · 所有时间为北京时间（UTC+8）</div>
+
+  <!-- 总览地图 -->
+  <section>
+    <div class="sec-title">行程总览地图</div>
+    <div class="mapbox">
+      <div id="overviewMap"></div>
+      <div class="legend">
+        <span><i style="background:var(--d1)"></i>Day1 抵达+泸山</span>
+        <span><i style="background:var(--d2)"></i>Day2 邛海+古城</span>
+        <span><i style="background:var(--d3)"></i>Day3 大石板写真</span>
+        <span><i style="background:var(--d4)"></i>Day4 广场+返程</span>
+        <span><span class="stay"></span>当晚住宿</span>
+      </div>
+      <div class="mapscheme">示意图（非精确比例）。列表里的地点、地图上的圆点都能直接点，唤起高德地图导航。</div>
+    </div>
+  </section>
+
+  <!-- 已确认订单 -->
+  <section>
+    <div class="sec-title">已确认订单</div>
+
+    <div class="book">
+      <h3>火车 · 去程 C77</h3>
+      <div class="row"><div class="k">日期</div><div class="v">9.30 周三 06:18 重庆北 → 12:38 西昌西</div></div>
+      <div class="row"><div class="k">说明</div><div class="v">终点攀枝花南，可在<b>西昌西站</b>提前下车（已在西昌西下车，无需另买票）</div></div>
+    </div>
+
+    <div class="book">
+      <h3>火车 · 回程 C78</h3>
+      <div class="row"><div class="k">日期</div><div class="v">10.3 周六 16:01 西昌西 → 21:53 重庆北</div></div>
+    </div>
+
+    <div class="book">
+      <h3>酒店 · 西昌东篱湿地美宿（邛海17度店）</h3>
+      <div class="row"><div class="k">住宿</div><div class="v">9.30 – 10.2（两晚）</div></div>
+      <div class="row"><div class="k">地址</div><div class="v"><a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">西昌市邛海17度</a></div></div>
+    </div>
+
+    <div class="book">
+      <h3>酒店 · 拾间山院·邛海慢生活空间</h3>
+      <div class="row"><div class="k">住宿</div><div class="v">10.2 – 10.3（一晚）</div></div>
+      <div class="row"><div class="k">地址</div><div class="v"><a class="loc" data-addr="西昌市海南街道大石板村社区8组">西昌市海南街道大石板村社区8组</a></div></div>
+    </div>
+
+    <div class="book">
+      <h3>写真 · 荒原摄影工作室</h3>
+      <div class="row"><div class="k">时间</div><div class="v">10.2 周五 09:00</div></div>
+      <div class="row"><div class="k">电话</div><div class="v">15828891892</div></div>
+      <div class="row"><div class="k">地址</div><div class="v"><a class="loc" data-addr="西昌市环海路四段与钟楼路交叉口正南方向389米">环海路四段与钟楼路交叉口正南约389米</a></div></div>
+    </div>
+  </section>
+
+  <!-- 逐日行程 -->
+  <section>
+    <div class="sec-title">逐日行程（点每天标题展开路线地图）</div>
+
+    <div class="day" data-day="1">
+      <div class="dayhead" onclick="toggleDay(1)">
+        <div class="dh-l"><span class="daynum" style="color:var(--d1)">Day 1</span><span class="daydate">9.30 周三</span><span class="daytitle">抵达 + 泸山</span><span class="daytag" style="background:var(--d1)">12:38到</span></div>
+        <div class="toggle" id="tg-1">展开地图 ▾</div>
+      </div>
+      <div class="daymap" id="daymap-1" hidden></div>
+      <ol class="timeline">
+        <li><div class="t">06:18</div><div class="c">C77 <a class="loc" data-addr="重庆北站,重庆市">重庆北站</a>发车（锚点，车上）<span class="note">全部时间按北京时间，跨时区看也不误差</span></div></li>
+        <li><div class="t">12:38</div><div class="c"><a class="loc" data-addr="西昌西站">西昌西站</a> 到达，出站打车<span class="note">C77 在西昌西提前下车，不用到攀枝花</span></div></li>
+        <li><div class="t">13:00</div><div class="c"><a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">东篱湿地美宿</a> 放行李<span class="note">邛海17度，约20分钟车程</span></div></li>
+        <li><div class="t">14:00</div><div class="c"><a class="loc" data-addr="泸山风景区,西昌市">泸山 + 彝族博物馆</a><span class="tag free">免费·免约</span><span class="note">9.30 非法定节假日，人少、不用预约；博物馆17:00关</span></div></li>
+        <li><div class="t">18:00</div><div class="c">晚餐 <a class="loc" data-addr="西昌市航天大道五段16号邛海17度9栋1单元114号">烤度·西昌特色鲜肉烧烤</a><span class="note">就在住地邛海17度，步行可达</span></div></li>
+      </ol>
+    </div>
+
+    <div class="day" data-day="2">
+      <div class="dayhead" onclick="toggleDay(2)">
+        <div class="dh-l"><span class="daynum" style="color:var(--d2)">Day 2</span><span class="daydate">10.1 周四·国庆</span><span class="daytitle">邛海 + 建昌古城</span><span class="daytag" style="background:var(--d2)">租电动车</span></div>
+        <div class="toggle" id="tg-2">展开地图 ▾</div>
+      </div>
+      <div class="daymap" id="daymap-2" hidden></div>
+      <ol class="timeline">
+        <li><div class="t">08:30</div><div class="c"><a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">邛海17度</a>附近租电动自行车<span class="note">国庆邛海周边易堵，电动车最灵活</span></div></li>
+        <li><div class="t">09:00</div><div class="c"><a class="loc" data-addr="邛海湿地公园,西昌市">邛海湿地</a> 骑行/散步<span class="tag free">免费</span><span class="note">早出门避人潮</span></div></li>
+        <li><div class="t">12:00</div><div class="c">午餐 <a class="loc" data-addr="西昌市东城街道南苑东路南苑小区A区1栋1层3号">会理鸡火丝</a></div></li>
+        <li><div class="t">13:00</div><div class="c">回<a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">东篱美宿</a>休整<span class="note">国庆中午热、人多，避开峰值</span></div></li>
+        <li><div class="t">17:30</div><div class="c"><a class="loc" data-addr="建昌古城,西昌市">建昌古城</a><span class="tag free">免费</span><span class="note">傍晚凉快，夜景好</span></div></li>
+        <li><div class="t">20:00</div><div class="c">晚餐 <a class="loc" data-addr="西昌市海河南路15号海河·繁华里">曾烤烤鲜肉烤串</a></div></li>
+      </ol>
+    </div>
+
+    <div class="day" data-day="3">
+      <div class="dayhead" onclick="toggleDay(3)">
+        <div class="dh-l"><span class="daynum" style="color:var(--d3)">Day 3</span><span class="daydate">10.2 周五</span><span class="daytitle">大石板写真 + 邛海南岸</span><span class="daytag" style="background:var(--d3)">9:00写真</span></div>
+        <div class="toggle" id="tg-3">展开地图 ▾</div>
+      </div>
+      <div class="daymap" id="daymap-3" hidden></div>
+      <ol class="timeline">
+        <li><div class="t">08:00</div><div class="c">退<a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">东篱美宿</a>、搬行李去<a class="loc" data-addr="西昌市海南街道大石板村社区8组">大石板村</a></div></li>
+        <li><div class="t">08:30</div><div class="c"><a class="loc" data-addr="西昌市海南街道大石板村社区8组">拾间山院</a> 落行李<span class="note">提前沟通早入住，先放行李再拍</span></div></li>
+        <li><div class="t">09:00</div><div class="c"><a class="loc" data-addr="西昌市环海路四段与钟楼路交叉口正南方向389米">荒原摄影写真</a><span class="tag book">已预约09:00</span><span class="note">电话 15828891892</span></div></li>
+        <li><div class="t">11:30</div><div class="c"><a class="loc" data-addr="西昌市海南街道大石板村社区8组">大石板村</a>随便吃午饭（小吃/米粉）</div></li>
+        <li><div class="t">12:30</div><div class="c"><a class="loc" data-addr="邛海南岸,西昌市">邛海南岸</a> / <a class="loc" data-addr="西昌市海南街道大石板村社区8组">大石板村</a>慢逛、喝咖啡</div></li>
+        <li><div class="t">17:00</div><div class="c"><a class="loc" data-addr="金鳞沙滩,西昌邛海">金鳞沙滩</a> 看夕阳<span class="tag free">免费</span></div></li>
+        <li><div class="t">18:30</div><div class="c">晚餐 <a class="loc" data-addr="西昌市海南乡环海路大石板古村健身广场对面">老王鲜鱼府</a></div></li>
+      </ol>
+    </div>
+
+    <div class="day" data-day="4">
+      <div class="dayhead" onclick="toggleDay(4)">
+        <div class="dh-l"><span class="daynum" style="color:var(--d4)">Day 4</span><span class="daydate">10.3 周六</span><span class="daytitle">火把广场 + 买水果 + 返程</span><span class="daytag" style="background:var(--d4)">16:01走</span></div>
+        <div class="toggle" id="tg-4">展开地图 ▾</div>
+      </div>
+      <div class="daymap" id="daymap-4" hidden></div>
+      <ol class="timeline">
+        <li><div class="t">09:00</div><div class="c"><a class="loc" data-addr="火把广场,西昌市">火把广场</a><span class="tag free">免费</span><span class="note">早上人少，拍照好看</span></div></li>
+        <li><div class="t">10:30</div><div class="c"><a class="loc" data-addr="金泰综合农贸市场,西昌市">金泰综合农贸市场</a> 买水果<span class="note">比景区便宜新鲜</span></div></li>
+        <li><div class="t">11:30</div><div class="c">午餐 <a class="loc" data-addr="西昌市紫薇星座吉祥东路南">老彭家</a></div></li>
+        <li><div class="t">12:30</div><div class="c">回<a class="loc" data-addr="西昌市海南街道大石板村社区8组">拾间山院</a>拿行李</div></li>
+        <li><div class="t">13:30</div><div class="c">打车去 <a class="loc" data-addr="西昌西站">西昌西站</a><span class="note">预留国庆堵车，别卡点</span></div></li>
+        <li><div class="t">16:01</div><div class="c">C78 <a class="loc" data-addr="西昌西站">西昌西</a>发车 → 21:53 <a class="loc" data-addr="重庆北站,重庆市">重庆北</a></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 待办清单 -->
+  <section>
+    <div class="sec-title">待办清单</div>
+    <ul class="list">
+      <li>出发前打 0834-3223150 确认彝族博物馆是否开放（可能装修关闭）</li>
+      <li>10.1 租好电动自行车（邛海17度附近）</li>
+      <li>带好身份证（景区/酒店核验用）</li>
+      <li>备防晒、墨镜（西昌紫外线强）</li>
+      <li>10.3 早上金泰市场买水果</li>
+      <li>写真店电话存手机：15828891892</li>
+    </ul>
+  </section>
+
+  <!-- 携带清单 -->
+  <section>
+    <div class="sec-title">携带清单（出发前装包）</div>
+    <ul class="list">
+      <li>学生证</li>
+      <li>拍立得</li>
+      <li>自拍杆</li>
+      <li>化妆包</li>
+      <li>充电宝 / 充电线</li>
+      <li>卷发棒</li>
+      <li>美瞳</li>
+      <li>两套衣服</li>
+      <li>钥匙</li>
+    </ul>
+  </section>
+
+  <!-- 实用贴士 & 风险 -->
+  <section class="tips">
+    <div class="sec-title">实用贴士</div>
+    <div class="list" style="box-shadow:none;border-style:dashed;">
+      <p style="margin:0;padding:8px 0;">邛海湿地免费、24h 开放；泸山免费，国庆可能限流，9.30 去不用约。</p>
+      <p style="margin:0;padding:8px 0;">古城/景区内水果贵且不新鲜，水果去金泰市场买更划算。</p>
+      <p style="margin:0;padding:8px 0;">打车起步价低，但国庆可能排队，跨城/赶车预留充足时间。</p>
+      <p style="margin:0;padding:8px 0;">昼夜温差大，带件外套；紫外线强，防晒别省。</p>
+      <p style="margin:0;padding:8px 0;">所有时间均为北京时间（UTC+8），无论你在哪打开，倒计时都不会算错。</p>
+    </div>
+    <div class="risk">
+      <p><b>彝族博物馆可能装修关闭</b>（最大不确定项）：出发前必须电话 0834-3223150 确认；若关，Day1 下午改纯逛泸山。</p>
+      <p><b>国庆黄金周（10.1–10.3）</b>邛海/建昌古城人多，Day2 一定早出门错峰。</p>
+      <p><b>景区水果贵</b>：坚持去金泰市场买，别在邛海边摊贩买。</p>
+    </div>
+  </section>
+
+  <footer>
+    本手册为终稿，公开访问，不含任何订单确认号/证件号/房间号。<br>
+    祝你俩西昌玩得开心。
+  </footer>
+</div>
+
+<script>
+  // ---------- 地图数据 ----------
+  var DAYS = [
+    { n:1, color:'var(--d1)', colorHex:'#e07a3f',
+      origin:'西昌西站', dest:'西昌市航天大道五段16号邛海17度9栋1单元114号',
+      ways:['四川省凉山彝族自治州西昌市邛海17度','泸山风景区,西昌市'],
+      pts:[ {name:'西昌西站',x:60,y:175,addr:'西昌西站'},
+            {name:'东篱美宿',x:300,y:70,addr:'四川省凉山彝族自治州西昌市邛海17度'},
+            {name:'泸山·彝博',x:120,y:250,addr:'泸山风景区,西昌市'},
+            {name:'烤度烧烤',x:300,y:70,addr:'西昌市航天大道五段16号邛海17度9栋1单元114号'} ] },
+    { n:2, color:'var(--d2)', colorHex:'#2a9d8f',
+      origin:'四川省凉山彝族自治州西昌市邛海17度', dest:'西昌市海河南路15号海河·繁华里',
+      ways:['邛海湿地公园,西昌市','西昌市东城街道南苑东路南苑小区A区1栋1层3号','建昌古城,西昌市'],
+      pts:[ {name:'东篱美宿',x:300,y:70,addr:'四川省凉山彝族自治州西昌市邛海17度'},
+            {name:'邛海湿地',x:250,y:150,addr:'邛海湿地公园,西昌市'},
+            {name:'会理鸡火丝',x:312,y:55,addr:'西昌市东城街道南苑东路南苑小区A区1栋1层3号'},
+            {name:'建昌古城',x:250,y:40,addr:'建昌古城,西昌市'},
+            {name:'曾烤烤',x:235,y:55,addr:'西昌市海河南路15号海河·繁华里'} ] },
+    { n:3, color:'var(--d3)', colorHex:'#9b5de5',
+      origin:'西昌市海南街道大石板村社区8组', dest:'金鳞沙滩,西昌邛海',
+      ways:['西昌市环海路四段与钟楼路交叉口正南方向389米','西昌市海南乡环海路大石板古村健身广场对面'],
+      pts:[ {name:'拾间山院',x:320,y:280,addr:'西昌市海南街道大石板村社区8组'},
+            {name:'荒原摄影',x:150,y:270,addr:'西昌市环海路四段与钟楼路交叉口正南方向389米'},
+            {name:'老王鲜鱼府',x:330,y:285,addr:'西昌市海南乡环海路大石板古村健身广场对面'},
+            {name:'金鳞沙滩',x:250,y:320,addr:'金鳞沙滩,西昌邛海'} ] },
+    { n:4, color:'var(--d4)', colorHex:'#e63946',
+      origin:'火把广场,西昌市', dest:'西昌西站',
+      ways:['金泰综合农贸市场,西昌市','西昌市紫薇星座吉祥东路南'],
+      pts:[ {name:'火把广场',x:240,y:60,addr:'火把广场,西昌市'},
+            {name:'金泰市场',x:230,y:30,addr:'金泰综合农贸市场,西昌市'},
+            {name:'老彭家',x:245,y:45,addr:'西昌市紫薇星座吉祥东路南'},
+            {name:'西昌西站',x:60,y:175,addr:'西昌西站'} ] }
+  ];
+  var STAYS = [ {name:'东篱美宿',x:300,y:70,addr:'四川省凉山彝族自治州西昌市邛海17度'}, {name:'拾间山院',x:320,y:280,addr:'西昌市海南街道大石板村社区8组'} ];
+
+  // 高德地图（国内可访问，手机可唤起 App 导航）
+  var AMAP = 'https://www.amap.com/search?query=';
+  function dirTo(a){ return AMAP + encodeURIComponent(a); }
+  function dirDay(o,d,w){ return AMAP + encodeURIComponent(d); }
+
+  // ---------- 总览地图 ----------
+  function buildOverview(){
+    var W=400,H=360;
+    var s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="行程总览地图">';
+    // 邛海（手绘感不规则湖形）
+    s += '<path d="M120,150 C160,108 300,108 322,158 C348,210 300,272 218,278 C138,284 92,232 110,184 C116,167 110,158 120,150 Z" fill="rgba(120,170,200,.22)" stroke="#7fb0c8" stroke-width="2" stroke-dasharray="3 4"/>';
+    s += '<text x="210" y="195" font-size="13" fill="#7a93a3" text-anchor="middle" font-style="italic">邛海</text>';
+    // 每日路线
+    DAYS.forEach(function(d){
+      var p = 'M '+d.pts[0].x+' '+d.pts[0].y;
+      for(var i=1;i<d.pts.length;i++) p += ' L '+d.pts[i].x+' '+d.pts[i].y;
+      s += '<path d="'+p+'" fill="none" stroke="'+d.colorHex+'" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" opacity=".85"/>';
+    });
+    // 住宿点（双圈）
+    STAYS.forEach(function(st){
+      s += '<g data-addr="'+st.addr+'" style="cursor:pointer">';
+      s += '<circle cx="'+st.x+'" cy="'+st.y+'" r="11" fill="none" stroke="#555" stroke-width="2"/>';
+      s += '<text x="'+st.x+'" y="'+(st.y+24)+'" font-size="10.5" fill="#555" text-anchor="middle">住·'+st.name+'</text>';
+      s += '</g>';
+    });
+    // 普通点
+    DAYS.forEach(function(d){
+      d.pts.forEach(function(p){
+        var isStay = STAYS.some(function(st){return st.name===p.name;});
+        if(isStay) return; // 住宿点已画
+        var tx = p.x, anchor='middle', dy = -9;
+        if(p.x>300){ anchor='start'; tx=p.x+8; dy=-2; }
+        if(p.x<90){ anchor='end'; tx=p.x-8; dy=-2; }
+        s += '<g data-addr="'+p.addr+'" style="cursor:pointer">';
+        s += '<circle cx="'+p.x+'" cy="'+p.y+'" r="5" fill="'+d.colorHex+'" stroke="#fff" stroke-width="2"/>';
+        s += '<text x="'+tx+'" y="'+(p.y+dy)+'" font-size="10.5" fill="#444" text-anchor="'+anchor+'">'+p.name+'</text>';
+        s += '</g>';
+      });
+    });
+    s += '</svg>';
+    document.getElementById('overviewMap').innerHTML = s;
+  }
+
+  // ---------- 单日小地图 ----------
+  function buildDayMap(n){
+    var d = DAYS.filter(function(x){return x.n===n;})[0];
+    if(!d) return '';
+    var xs = d.pts.map(function(p){return p.x;}), ys = d.pts.map(function(p){return p.y;});
+    var minx=Math.min.apply(null,xs)-34, maxx=Math.max.apply(null,xs)+34;
+    var miny=Math.min.apply(null,ys)-34, maxy=Math.max.apply(null,ys)+34;
+    var W=400, H=300;
+    function sx(x){ return (x-minx)/(maxx-minx)*W; }
+    function sy(y){ return (y-miny)/(maxy-miny)*H; }
+    var s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Day'+n+'路线">';
+    var p = 'M '+sx(d.pts[0].x)+' '+sy(d.pts[0].y);
+    for(var i=1;i<d.pts.length;i++) p += ' L '+sx(d.pts[i].x)+' '+sy(d.pts[i].y);
+    s += '<path d="'+p+'" fill="none" stroke="'+d.colorHex+'" stroke-width="3.5" stroke-dasharray="2 6" stroke-linecap="round"/>';
+    d.pts.forEach(function(pt,idx){
+      s += '<g data-addr="'+pt.addr+'" style="cursor:pointer">';
+      s += '<circle cx="'+sx(pt.x)+'" cy="'+sy(pt.y)+'" r="6" fill="'+d.colorHex+'" stroke="#fff" stroke-width="2"/>';
+      s += '<text x="'+sx(pt.x)+'" y="'+(sy(pt.y)-10)+'" font-size="11" fill="#444" text-anchor="middle">'+ (idx+1)+'. '+pt.name +'</text>';
+      s += '</g>';
+    });
+    s += '</svg>';
+    s += '<a class="navbtn" href="'+dirDay(d.origin,d.dest,d.ways)+'" target="_blank" rel="noopener">一键全天导航（'+d.pts.length+'个点）</a>';
+    s += '<div class="mapscheme" style="padding:0 14px 10px">地图上的每个圆点也可单独点击，直接导航到该地点。</div>';
+    return s;
+  }
+
+  function toggleDay(n){
+    var box = document.getElementById('daymap-'+n);
+    var tg = document.getElementById('tg-'+n);
+    if(box.hidden){ box.innerHTML = buildDayMap(n); box.hidden = false; tg.textContent = '收起地图 ▴'; }
+    else { box.hidden = true; tg.textContent = '展开地图 ▾'; }
+  }
+
+  // ---------- 地点点击唤起导航 ----------
+  // 给所有 .loc 锚点补上原生 href（避免被浏览器当作弹窗拦截）
+  document.querySelectorAll('a.loc').forEach(function(a){
+    var addr = a.getAttribute('data-addr');
+    if(addr){ a.href = dirTo(addr); a.target = '_blank'; a.rel = 'noopener'; }
+  });
+  // SVG 圆点（非 <a>）点击时用 window.open 唤起地图
+  document.addEventListener('click', function(e){
+    var el = e.target.closest('[data-addr]');
+    if(!el) return;
+    if(el.tagName === 'A') return; // 锚点已由浏览器原生跳转
+    var addr = el.getAttribute('data-addr');
+    if(!addr) return;
+    e.preventDefault();
+    window.open(dirTo(addr), '_blank', 'noopener');
+  });
+
+  // ---------- 此刻关注 倒计时（UTC+8，跨时区安全） ----------
+  var EVENTS = [
+    { t:'2026-09-30T06:18:00+08:00', label:'C77 重庆北站发车' },
+    { t:'2026-09-30T12:38:00+08:00', label:'到达西昌西站' },
+    { t:'2026-09-30T14:00:00+08:00', label:'泸山 · 彝族博物馆' },
+    { t:'2026-10-01T08:30:00+08:00', label:'租电动车 · 邛海骑行' },
+    { t:'2026-10-02T09:00:00+08:00', label:'荒原摄影写真 09:00' },
+    { t:'2026-10-03T09:00:00+08:00', label:'火把广场' },
+    { t:'2026-10-03T16:01:00+08:00', label:'C78 西昌西站发车' }
+  ];
+  function tick(){
+    var now = Date.now();
+    var next = null;
+    for(var i=0;i<EVENTS.length;i++){ if(new Date(EVENTS[i].t).getTime() > now){ next = EVENTS[i]; break; } }
+    if(!next){
+      document.getElementById('nowEvent').textContent = '旅途顺利，玩得开心';
+      document.getElementById('countdown').style.display = 'none';
+      return;
+    }
+    var diff = new Date(next.t).getTime() - now;
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    document.getElementById('nowEvent').textContent = next.label;
+    document.getElementById('cd-d').textContent = d;
+    document.getElementById('cd-h').textContent = h;
+    document.getElementById('cd-m').textContent = m;
+    document.getElementById('cd-s').textContent = s;
+  }
+  setInterval(tick, 1000); tick();
+
+  buildOverview();
+</script>
+</body>
+</html>
