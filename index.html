@@ -188,6 +188,14 @@
     </div>
 
     <div class="book">
+      <h3>门票 · 泸山索道上行 + 滑道下行</h3>
+      <div class="row"><div class="k">日期</div><div class="v">9.30 周三</div></div>
+      <div class="row"><div class="k">项目</div><div class="v">索道上山 + 滑道下山（成人票）</div></div>
+      <div class="row"><div class="k">换票</div><div class="v">09:00–17:30 · 泸山景区售票处</div></div>
+      <div class="row"><div class="k">说明</div><div class="v">凭电子凭证先到售票处换票，再坐索道/滑道</div></div>
+    </div>
+
+    <div class="book">
       <h3>酒店 · 西昌东篱湿地美宿（邛海17度店）</h3>
       <div class="row"><div class="k">住宿</div><div class="v">9.30 – 10.2（两晚）</div></div>
       <div class="row"><div class="k">地址</div><div class="v"><a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">西昌市邛海17度</a></div></div>
@@ -221,7 +229,7 @@
         <li><div class="t">06:18</div><div class="c">C77 <a class="loc" data-addr="重庆北站,重庆市">重庆北站</a>发车（锚点，车上）<span class="note">全部时间按北京时间，跨时区看也不误差</span></div></li>
         <li><div class="t">12:38</div><div class="c"><a class="loc" data-addr="西昌西站">西昌西站</a> 到达，出站打车<span class="note">C77 在西昌西提前下车，不用到攀枝花</span></div></li>
         <li><div class="t">13:00</div><div class="c"><a class="loc" data-addr="四川省凉山彝族自治州西昌市邛海17度">东篱湿地美宿</a> 放行李<span class="note">邛海17度，约20分钟车程</span></div></li>
-        <li><div class="t">14:00</div><div class="c"><a class="loc" data-addr="泸山风景区,西昌市">泸山 + 彝族博物馆</a><span class="tag free">免费·免约</span><span class="note">9.30 非法定节假日，人少、不用预约；博物馆17:00关</span></div></li>
+        <li><div class="t">14:00</div><div class="c"><a class="loc" data-addr="泸山风景区,西昌市">泸山 + 彝族博物馆</a><span class="tag book">索道+滑道已购票</span><span class="note">索道上山、滑道下山，票已买；博物馆 17:00 关，出发前建议电话 0834-3223150 确认开放</span></div></li>
         <li><div class="t">18:00</div><div class="c">晚餐 <a class="loc" data-addr="西昌市航天大道五段16号邛海17度9栋1单元114号">烤度·西昌特色鲜肉烧烤</a><span class="note">就在住地邛海17度，步行可达</span></div></li>
       </ol>
     </div>
@@ -316,7 +324,7 @@
       <p style="margin:0;padding:8px 0;">所有时间均为北京时间（UTC+8），无论你在哪打开，倒计时都不会算错。</p>
     </div>
     <div class="risk">
-      <p><b>彝族博物馆可能装修关闭</b>（最大不确定项）：出发前必须电话 0834-3223150 确认；若关，Day1 下午改纯逛泸山。</p>
+      <p><b>彝族博物馆可能装修关闭</b>（最大不确定项）：出发前必须电话 0834-3223150 确认；若关，Day1 下午改纯坐索道上山、滑道下山，逛泸山。</p>
       <p><b>国庆黄金周（10.1–10.3）</b>邛海/建昌古城人多，Day2 一定早出门错峰。</p>
       <p><b>景区水果贵</b>：坚持去金泰市场买，别在邛海边摊贩买。</p>
     </div>
@@ -325,6 +333,10 @@
   <footer>
     本手册为终稿，公开访问，不含任何订单确认号/证件号/房间号。<br>
     祝你俩西昌玩得开心。
+    <div style="margin-top:14px">
+      <button onclick="downloadClean()" style="background:var(--accent);color:#fff;border:none;font-size:14px;font-weight:700;padding:11px 18px;border-radius:12px 15px 12px 16px;cursor:pointer">下载 index.html（发布用）</button>
+      <div style="font-size:11px;color:var(--ink-soft);margin-top:6px">点一下把干净文件存到电脑，再拖进 GitHub 仓库即可</div>
+    </div>
   </footer>
 </div>
 
@@ -372,23 +384,27 @@
   function buildOverview(){
     var W=400,H=360;
     var s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="行程总览地图">';
+    // 邛海（手绘感不规则湖形）
     s += '<path d="M120,150 C160,108 300,108 322,158 C348,210 300,272 218,278 C138,284 92,232 110,184 C116,167 110,158 120,150 Z" fill="rgba(120,170,200,.22)" stroke="#7fb0c8" stroke-width="2" stroke-dasharray="3 4"/>';
     s += '<text x="210" y="195" font-size="13" fill="#7a93a3" text-anchor="middle" font-style="italic">邛海</text>';
+    // 每日路线
     DAYS.forEach(function(d){
       var p = 'M '+d.pts[0].x+' '+d.pts[0].y;
       for(var i=1;i<d.pts.length;i++) p += ' L '+d.pts[i].x+' '+d.pts[i].y;
       s += '<path d="'+p+'" fill="none" stroke="'+d.colorHex+'" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" opacity=".85"/>';
     });
+    // 住宿点（双圈）
     STAYS.forEach(function(st){
       s += '<g data-addr="'+st.addr+'" style="cursor:pointer">';
       s += '<circle cx="'+st.x+'" cy="'+st.y+'" r="11" fill="none" stroke="#555" stroke-width="2"/>';
       s += '<text x="'+st.x+'" y="'+(st.y+24)+'" font-size="10.5" fill="#555" text-anchor="middle">住·'+st.name+'</text>';
       s += '</g>';
     });
+    // 普通点
     DAYS.forEach(function(d){
       d.pts.forEach(function(p){
         var isStay = STAYS.some(function(st){return st.name===p.name;});
-        if(isStay) return;
+        if(isStay) return; // 住宿点已画
         var tx = p.x, anchor='middle', dy = -9;
         if(p.x>300){ anchor='start'; tx=p.x+8; dy=-2; }
         if(p.x<90){ anchor='end'; tx=p.x-8; dy=-2; }
@@ -436,14 +452,16 @@
   }
 
   // ---------- 地点点击唤起导航 ----------
+  // 给所有 .loc 锚点补上原生 href（避免被浏览器当作弹窗拦截）
   document.querySelectorAll('a.loc').forEach(function(a){
     var addr = a.getAttribute('data-addr');
     if(addr){ a.href = dirTo(addr); a.target = '_blank'; a.rel = 'noopener'; }
   });
+  // SVG 圆点（非 <a>）点击时用 window.open 唤起地图
   document.addEventListener('click', function(e){
     var el = e.target.closest('[data-addr]');
     if(!el) return;
-    if(el.tagName === 'A') return;
+    if(el.tagName === 'A') return; // 锚点已由浏览器原生跳转
     var addr = el.getAttribute('data-addr');
     if(!addr) return;
     e.preventDefault();
@@ -481,6 +499,21 @@
     document.getElementById('cd-s').textContent = s;
   }
   setInterval(tick, 1000); tick();
+
+  // ---------- 下载干净文件（过滤预览环境注入的监控脚本） ----------
+  function downloadClean(){
+    var clone = document.documentElement.cloneNode(true);
+    clone.querySelectorAll('script').forEach(function(s){
+      var h = s.outerHTML;
+      if(/genie-monitor-sdk|code-buddy-dom|myqcloud|Genie Monitor|CODEBUDDY|code-buddy|__genie__/i.test(h)) s.remove();
+    });
+    var out = '<!DOCTYPE html>\n' + clone.outerHTML;
+    var blob = new Blob([out], {type:'text/html;charset=utf-8'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'index.html';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
 
   buildOverview();
 </script>
