@@ -168,7 +168,7 @@
         <span><i style="background:var(--d4)"></i>Day4 广场+返程</span>
         <span><span class="stay"></span>当晚住宿</span>
       </div>
-      <div class="mapscheme">示意图（非精确比例）。列表里的地点、地图上的圆点都能直接点，唤起高德地图导航。</div>
+      <div class="mapscheme">示意图（非精确比例）。列表里的地点、地图上的圆点都能直接点，唤起腾讯地图导航。</div>
     </div>
   </section>
 
@@ -363,36 +363,32 @@
   ];
   var STAYS = [ {name:'东篱美宿',x:300,y:70,addr:'四川省凉山彝族自治州西昌市邛海17度'}, {name:'拾间山院',x:320,y:280,addr:'西昌市海南街道大石板村社区8组'} ];
 
-  // 高德地图（国内可访问，手机可唤起 App 导航）
-  var AMAP = 'https://www.amap.com/search?query=';
-  function dirTo(a){ return AMAP + encodeURIComponent(a); }
-  function dirDay(o,d,w){ return AMAP + encodeURIComponent(d); }
+  // 腾讯地图（国内可访问，手机可唤起 App 导航）
+  var TENCENT = 'https://apis.map.qq.com/uri/v1/routeplan?type=drive&referer=xichang&to=';
+  function dirTo(a){ return TENCENT + encodeURIComponent(a); }
+  function dirDay(o,d,w){ return TENCENT + encodeURIComponent(d); }
 
   // ---------- 总览地图 ----------
   function buildOverview(){
     var W=400,H=360;
     var s = '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="行程总览地图">';
-    // 邛海（手绘感不规则湖形）
     s += '<path d="M120,150 C160,108 300,108 322,158 C348,210 300,272 218,278 C138,284 92,232 110,184 C116,167 110,158 120,150 Z" fill="rgba(120,170,200,.22)" stroke="#7fb0c8" stroke-width="2" stroke-dasharray="3 4"/>';
     s += '<text x="210" y="195" font-size="13" fill="#7a93a3" text-anchor="middle" font-style="italic">邛海</text>';
-    // 每日路线
     DAYS.forEach(function(d){
       var p = 'M '+d.pts[0].x+' '+d.pts[0].y;
       for(var i=1;i<d.pts.length;i++) p += ' L '+d.pts[i].x+' '+d.pts[i].y;
       s += '<path d="'+p+'" fill="none" stroke="'+d.colorHex+'" stroke-width="3" stroke-dasharray="2 6" stroke-linecap="round" opacity=".85"/>';
     });
-    // 住宿点（双圈）
     STAYS.forEach(function(st){
       s += '<g data-addr="'+st.addr+'" style="cursor:pointer">';
       s += '<circle cx="'+st.x+'" cy="'+st.y+'" r="11" fill="none" stroke="#555" stroke-width="2"/>';
       s += '<text x="'+st.x+'" y="'+(st.y+24)+'" font-size="10.5" fill="#555" text-anchor="middle">住·'+st.name+'</text>';
       s += '</g>';
     });
-    // 普通点
     DAYS.forEach(function(d){
       d.pts.forEach(function(p){
         var isStay = STAYS.some(function(st){return st.name===p.name;});
-        if(isStay) return; // 住宿点已画
+        if(isStay) return;
         var tx = p.x, anchor='middle', dy = -9;
         if(p.x>300){ anchor='start'; tx=p.x+8; dy=-2; }
         if(p.x<90){ anchor='end'; tx=p.x-8; dy=-2; }
@@ -440,16 +436,14 @@
   }
 
   // ---------- 地点点击唤起导航 ----------
-  // 给所有 .loc 锚点补上原生 href（避免被浏览器当作弹窗拦截）
   document.querySelectorAll('a.loc').forEach(function(a){
     var addr = a.getAttribute('data-addr');
     if(addr){ a.href = dirTo(addr); a.target = '_blank'; a.rel = 'noopener'; }
   });
-  // SVG 圆点（非 <a>）点击时用 window.open 唤起地图
   document.addEventListener('click', function(e){
     var el = e.target.closest('[data-addr]');
     if(!el) return;
-    if(el.tagName === 'A') return; // 锚点已由浏览器原生跳转
+    if(el.tagName === 'A') return;
     var addr = el.getAttribute('data-addr');
     if(!addr) return;
     e.preventDefault();
